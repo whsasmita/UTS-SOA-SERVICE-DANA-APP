@@ -1,0 +1,37 @@
+# project_dana/tasks/account_tasks.py
+
+from utils.db import execute_query
+
+def cleanup_inactive_users():
+    """
+    Menghapus pengguna yang tidak memiliki akun rekening.
+    Ini adalah contoh tugas pembersihan.
+    """
+    print("Memulai tugas pembersihan pengguna tidak aktif...")
+    
+    # Query untuk menemukan user_id yang tidak ada di tabel accounts
+    query = """
+    SELECT u.id, u.username
+    FROM users u
+    LEFT JOIN accounts a ON u.id = a.user_id
+    WHERE a.user_id IS NULL;
+    """
+    
+    inactive_users = execute_query(query)
+    
+    if not inactive_users:
+        print("Tidak ada pengguna tidak aktif yang ditemukan.")
+        return
+
+    print(f"Ditemukan {len(inactive_users)} pengguna tidak aktif.")
+    
+    for user in inactive_users:
+        # Query untuk menghapus pengguna
+        delete_query = "DELETE FROM users WHERE id = %s"
+        execute_query(delete_query, (user['id'],), fetch=False)
+        print(f"  - Pengguna '{user['username']}' dengan ID {user['id']} telah dihapus.")
+    
+    print("Pembersihan selesai.")
+
+if __name__ == '__main__':
+    cleanup_inactive_users()
