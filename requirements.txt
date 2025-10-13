@@ -4,3 +4,4 @@ spyne
 lxml
 zeep
 requests
+PyJWT
