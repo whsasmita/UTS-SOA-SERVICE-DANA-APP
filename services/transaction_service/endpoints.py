@@ -1,5 +1,3 @@
-# project_dana/services/transaction_service/endpoints.py
-
 from zeep import Client
 from .transaction import transfer_dana
 

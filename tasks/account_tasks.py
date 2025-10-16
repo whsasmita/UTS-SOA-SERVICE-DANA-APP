@@ -1,7 +1,6 @@
 import sys
 import os
 
-# Add parent directory to path agar bisa import utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.db import execute_query
@@ -13,7 +12,6 @@ def cleanup_inactive_users():
     """
     print("Memulai tugas pembersihan pengguna tidak aktif...")
     
-    # Query untuk menemukan user_id yang tidak ada di tabel accounts
     query = """
     SELECT u.id, u.username
     FROM users u
@@ -30,7 +28,6 @@ def cleanup_inactive_users():
     print(f"Ditemukan {len(inactive_users)} pengguna tidak aktif.")
     
     for user in inactive_users:
-        # Query untuk menghapus pengguna
         delete_query = "DELETE FROM users WHERE id = %s"
         execute_query(delete_query, (user['id'],), fetch=False)
         print(f"  - Pengguna '{user['username']}' dengan ID {user['id']} telah dihapus.")

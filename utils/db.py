@@ -2,7 +2,6 @@ import pymysql
 import sys
 import os
 
-# Add parent directory to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from config import DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
@@ -47,7 +46,6 @@ def execute_query(query, params=None, fetch=True):
         connection.close()
 
 if __name__ == "__main__":
-    # Test database connection
     conn = get_connection()
     if conn:
         print("✅ Database connection successful!")

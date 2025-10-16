@@ -1,7 +1,6 @@
 import sys
 import os
 
-# Add parent directory to path agar bisa import utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.db import execute_query
@@ -13,7 +12,6 @@ def check_and_log_transactions():
     """
     print("Memulai verifikasi transaksi...")
 
-    # Ambil semua transaksi
     query = "SELECT * FROM transactions ORDER BY created_at DESC;"
     transactions = execute_query(query)
     

@@ -1,5 +1,3 @@
-# project_dana/services/transaction_service/transaction.py
-
 from utils.db import execute_query
 
 def transfer_dana(sender_account_number, receiver_account_number, amount):
