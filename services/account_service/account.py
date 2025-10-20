@@ -7,12 +7,7 @@ import random
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from utils.db import execute_query
-
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
-
-def generate_account_number():
-    return str(random.randint(1000000000, 9999999999))
+from utils.helpers import generate_account_number, hash_password
 
 def register(username, password):
     try:

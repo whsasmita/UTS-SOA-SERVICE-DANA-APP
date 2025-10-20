@@ -1,5 +1,3 @@
-# project_dana/services/account_service/endpoints.py
-
 from zeep import Client
 from .account import register, login
 

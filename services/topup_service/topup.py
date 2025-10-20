@@ -1,5 +1,3 @@
-# project_dana/services/topup_service/topup.py
-
 from utils.db import execute_query
 
 def topup_dana(account_number, amount):
