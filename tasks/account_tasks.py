@@ -8,7 +8,6 @@ from utils.db import execute_query
 def cleanup_inactive_users():
     """
     Menghapus pengguna yang tidak memiliki akun rekening.
-    Ini adalah contoh tugas pembersihan.
     """
     print("Memulai tugas pembersihan pengguna tidak aktif...")
     

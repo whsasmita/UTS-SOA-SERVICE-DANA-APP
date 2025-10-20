@@ -7,7 +7,6 @@ from spyne.protocol.soap import Soap11
 from spyne.server.wsgi import WsgiApplication
 from wsgiref.simple_server import make_server
 
-# Gunakan endpoints sebagai adapter; tetap impor get_account_info langsung
 from services.account_service.endpoints import AccountService as EndpointsAdapter
 from services.account_service.account import get_account_info
 from utils.jwt_helper import generate_jwt_token, validate_jwt_token

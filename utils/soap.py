@@ -6,7 +6,6 @@ import logging
 logging.getLogger('zeep').setLevel(logging.WARNING)
 
 def get_soap_client(wsdl_url):
-    """Membuat client SOAP dari URL WSDL."""
     try:
         # Check if service is running
         response = requests.get(wsdl_url, timeout=5)
@@ -22,7 +21,6 @@ def get_soap_client(wsdl_url):
         return None
 
 def call_soap_method(client, method_name, **kwargs):
-    """Memanggil method SOAP dengan parameter."""
     try:
         # Get the service
         service = client.service
