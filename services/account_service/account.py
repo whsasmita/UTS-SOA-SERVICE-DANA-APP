@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from utils.db import execute_query
 from utils.helpers import generate_account_number, hash_password
 
+
 def register(username, password):
     try:
         hashed_password = hash_password(password)

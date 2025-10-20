@@ -7,19 +7,23 @@ from spyne.protocol.soap import Soap11
 from spyne.server.wsgi import WsgiApplication
 from wsgiref.simple_server import make_server
 
-from services.account_service.account import register, login, get_account_info
+# Gunakan endpoints sebagai adapter; tetap impor get_account_info langsung
+from services.account_service.endpoints import AccountService as EndpointsAdapter
+from services.account_service.account import get_account_info
 from utils.jwt_helper import generate_jwt_token, validate_jwt_token
+
+# instantiate adapter
+endpoints = EndpointsAdapter()
 
 class AccountService(ServiceBase):
     @rpc(Unicode, Unicode, _returns=Unicode)
     def login_user(ctx, username, password):
         """Login dan return JWT token."""
-        result = login(username, password)
+        result = endpoints.login_user(username, password)
         if result.startswith("success:"):
             # Extract account number dari result
             try:
                 account_number = result.split("Rekening:")[1].split(",")[0].strip()
-                # Generate JWT token
                 token = generate_jwt_token(username, account_number)
                 return f"success: Login berhasil. Token: {token}"
             except Exception as e:
@@ -29,11 +33,10 @@ class AccountService(ServiceBase):
     @rpc(Unicode, Unicode, _returns=Unicode)
     def register_user(ctx, username, password):
         """Register dan return JWT token."""
-        result = register(username, password)
+        result = endpoints.register_user(username, password)
         if result.startswith("success:"):
             try:
                 account_number = result.split("Nomor rekening:")[1].strip()
-                # Generate JWT token
                 token = generate_jwt_token(username, account_number)
                 return f"success: Registrasi berhasil. Nomor rekening: {account_number}. Token: {token}"
             except Exception as e:
@@ -46,11 +49,8 @@ class AccountService(ServiceBase):
         valid, payload = validate_jwt_token(token)
         if not valid:
             return f"error: {payload}"
-        
-        # Pastikan token sesuai dengan account yang diminta
         if payload['account_number'] != account_number:
             return "error: Unauthorized access"
-            
         return get_account_info(account_number)
 
     @rpc(Unicode, _returns=Unicode)
